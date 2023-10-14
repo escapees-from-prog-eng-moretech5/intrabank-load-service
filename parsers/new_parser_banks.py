@@ -2,7 +2,7 @@ import re
 
 
 def days_in_interval(day1, day2):
-    days_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    days_order = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
     index1 = days_order.index(day1)
     index2 = days_order.index(day2)
     if index1 > index2:
