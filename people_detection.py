@@ -5,6 +5,7 @@ import numpy as np
 import requests
 import time
 
+
 class Person:
     def __init__(self, person_id, box):
         self.person_id = person_id
@@ -36,7 +37,7 @@ class Camera:
         cv2.destroyAllWindows()
 
     def _get_person_id(self, box):
-        threshold = 3
+        threshold = 50
         for person in self.active_people:
             (startX_prev, startY_prev, endX_prev, endY_prev) = person.box
             (startX, startY, endX, endY) = box
@@ -64,7 +65,7 @@ class Camera:
             total_frames += 1
 
             (H, W) = frame.shape[:2]
-            blob = cv2.dnn.blobFromImage(frame, 0.007843, (W, H), 100)
+            blob = cv2.dnn.blobFromImage(frame, 0.007843, (W, H), 127.5)
             self.detector.setInput(blob)
             detections = self.detector.forward()
             self._draw_boxes(frame, detections, H, W)
@@ -75,7 +76,7 @@ class Camera:
             fps_text = "FPS: {:.2f}".format(fps)
             cv2.putText(frame, fps_text, (5, 30), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 1)
 
-            cv2.imshow("Application", frame)
+            #cv2.imshow("Application", frame)
             key = cv2.waitKey(1)
             if key == ord('q'):
                 break
@@ -111,7 +112,8 @@ if __name__ == "__main__":
     modelpath = "NN\MobileNetSSD_deploy.caffemodel"
     video_path = 'vids_tests/pexels_videos_1338598 (1080p).mp4'
     #video_path = 'vids_tests/production_id_3687560 (2160p).mp4'
+    #video_path = 'vids_tests/production_id_4174175 (1080p).mp4'
     cam = Camera(video_path, protopath, modelpath)
-    cam.start_camera_for_duration(1)
+    cam.start_camera_for_duration(0.2)
     cam.start_camera()
 
